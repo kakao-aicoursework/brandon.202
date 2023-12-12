@@ -37,7 +37,7 @@ def read_txt_files_in_directory(directory_path='./data/'):
 
 
 def initialize_data():
-  ids, metadatas, documents = read_txt_files_in_directory('./data/')
+  ids, metadatas, documents = read_txt_files_in_directory('../data/')
   kakao_collection.add(
     documents=documents,
     metadatas=metadatas,

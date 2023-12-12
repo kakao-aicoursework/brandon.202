@@ -22,7 +22,7 @@ def initialize_data():
     name="kakao-data",
     metadata={"hnsw:space": "cosine"}
   )
-  files = read_txt_files_in_directory('./data/')
+  files = read_txt_files_in_directory('../data/')
   for idx, file in enumerate(files, start=1):
     kakao_data_collection.add(
       documents=file.content,
