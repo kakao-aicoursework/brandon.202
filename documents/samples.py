@@ -1,6 +1,3 @@
-#-*- coding: utf-8 -*-
-
-
 # SimpleText : https://chatbot.kakao.com/docs/skill-response-format#simpletext
 simple_text_sample = {
     "version": "2.0",
