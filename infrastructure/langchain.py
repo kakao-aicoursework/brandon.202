@@ -4,6 +4,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import ChatPromptTemplate
 from infrastructure.vectorstore import query_on_chroma
 from infrastructure.history_storage import load_conversation_history, get_chat_history, log_qna
+from infrastructure.websearch import search
 
 # load .env
 load_dotenv()
@@ -42,12 +43,18 @@ def create_chains():
       template_path="./infrastructure/templates/retrieve_template.txt",
       output_key="output",
     ),
+    'websearch': create_template_chain(
+      llm=llm,
+      template_path="./infrastructure/templates/websearch_response_template.txt",
+      output_key="intent",
+    ),
     'default': create_template_chain(
       llm=llm,
       template_path="./infrastructure/templates/default_response_template.txt",
       output_key="output",
     )
   }
+
 
 
 def generate_message(user_message, conversation_id: str = "dummy") -> dict[str, str]:
@@ -64,6 +71,9 @@ def generate_message(user_message, conversation_id: str = "dummy") -> dict[str, 
   if intent == "retrieve_kakao_data":
     context["retrieve_result"] = query_on_chroma(context["user_message"])
     answer = chains["retrieve_kakao_data"].run(context)
+  if intent == "websearch":
+    context["websearch_result"] = search(user_message)
+    answer = chains["websearch"].run(context)
   else:
     answer = chains["default"].run(context["user_message"])
 
