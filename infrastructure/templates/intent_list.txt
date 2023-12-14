@@ -1,0 +1,1 @@
+- retrieve_kakao_data: 카카오와 관련된 정보를 수집할 수 있습니다.
