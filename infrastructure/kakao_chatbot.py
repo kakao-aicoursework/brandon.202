@@ -21,4 +21,4 @@ def send_simple_text(request: ChatbotRequest, message) -> dict:
   }
   url = request.userRequest.callbackUrl
   if url:
-    response = requests.post(url, json=payload)
+    requests.post(url, json=payload)
