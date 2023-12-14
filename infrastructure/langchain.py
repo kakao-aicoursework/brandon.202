@@ -43,7 +43,12 @@ def create_chains():
       template_path="./infrastructure/templates/retrieve_template.txt",
       output_key="output",
     ),
-    'websearch': create_template_chain(
+    'websearch_parse_keyword': create_template_chain(
+      llm=llm,
+      template_path="./infrastructure/templates/websearch_parse_keyword_template.txt",
+      output_key="intent",
+    ),
+    'websearch_response': create_template_chain(
       llm=llm,
       template_path="./infrastructure/templates/websearch_response_template.txt",
       output_key="intent",
@@ -71,9 +76,11 @@ def generate_message(user_message, conversation_id: str = "dummy") -> dict[str, 
   if intent == "retrieve_kakao_data":
     context["retrieve_result"] = query_on_chroma(context["user_message"])
     answer = chains["retrieve_kakao_data"].run(context)
-  if intent == "websearch":
-    context["websearch_result"] = search(user_message)
-    answer = chains["websearch"].run(context)
+  elif intent == "websearch":
+    keyword = chains["websearch_parse_keyword"].run(context)
+    context["websearch_keyword"] = keyword
+    context["websearch_result"] = search(keyword)
+    answer = chains["websearch_response"].run(context)
   else:
     answer = chains["default"].run(context["user_message"])
 
