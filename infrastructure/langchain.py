@@ -46,12 +46,12 @@ def create_chains():
     'websearch_parse_keyword': create_template_chain(
       llm=llm,
       template_path="./infrastructure/templates/websearch_parse_keyword_template.txt",
-      output_key="intent",
+      output_key="output",
     ),
     'websearch_response': create_template_chain(
       llm=llm,
       template_path="./infrastructure/templates/websearch_response_template.txt",
-      output_key="intent",
+      output_key="output",
     ),
     'default': create_template_chain(
       llm=llm,
