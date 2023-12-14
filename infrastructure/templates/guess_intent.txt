@@ -2,6 +2,10 @@
 인텐트란 너가 할 수 있는 행동을 뜻해.
 사족은 달지 말고 User의 메시지를 보고 너가 수행해야할 인텐트를 하나 뽑아와봐
 
+<이전까지의 대화 기록>
+{chat_history}
+</이전까지의 대화 기록>
+
 <intent_list>
 {intent_list}
 </intent_list>

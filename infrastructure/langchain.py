@@ -3,6 +3,7 @@ from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import ChatPromptTemplate
 from infrastructure.vectorstore import query_on_chroma
+from infrastructure.history_storage import load_conversation_history, get_chat_history, log_qna
 
 # load .env
 load_dotenv()
@@ -49,19 +50,23 @@ def create_chains():
   }
 
 
-def generate_message(user_message) -> dict[str, str]:
+def generate_message(user_message, conversation_id: str = "dummy") -> dict[str, str]:
+  history_file = load_conversation_history(conversation_id)
+
   chains = create_chains()
   context = dict(user_message=user_message)
   context["input"] = context["user_message"]
-  context["intent_list"] = read_file(
-    "./infrastructure/templates/intent_list.txt")
+  context["intent_list"] = read_file("./infrastructure/templates/intent_list.txt")
+  context["chat_history"] = get_chat_history(conversation_id)
   intent = chains["guess_intent"].run(context)
 
   print(intent)
   if intent == "retrieve_kakao_data":
     context["retrieve_result"] = query_on_chroma(context["user_message"])
-    result = chains["retrieve_kakao_data"].run(context)
+    answer = chains["retrieve_kakao_data"].run(context)
   else:
-    result = chains["default"].run(context["user_message"])
-  print(result)
-  return result
+    answer = chains["default"].run(context["user_message"])
+
+  log_qna(history_file, user_message, answer)
+  print(answer)
+  return answer

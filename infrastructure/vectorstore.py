@@ -12,7 +12,7 @@ from langchain.vectorstores import Chroma
 load_dotenv()
 
 CHROMA_COLLECTION_NAME = "kakao-bot"
-CHROMA_PERSIST_PATH = "./chroma/kakao-persist"
+CHROMA_PERSIST_PATH = "./persistence/kakao-chroma"
 
 def upload_embedding_from_file(file_path):
   loader = {
