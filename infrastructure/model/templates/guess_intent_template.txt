@@ -6,9 +6,16 @@
 {chat_history}
 </이전까지의 대화 기록>
 
+<현재 사용자의 요청>
+{user_message}
+</현재 사용자의 요청>
+
+<현재까지 만들어진 대답>
+{current_answer}
+</현재까지 만들어진 대답>
+
 <intent_list>
 {intent_list}
 </intent_list>
 
-User: {user_message}
 Intent:
