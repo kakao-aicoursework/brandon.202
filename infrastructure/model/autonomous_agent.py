@@ -30,6 +30,7 @@ class AutonomousAgent():
         template=read_file("./infrastructure/model/templates/guess_intent_template.txt"),
       ),
       output_key="intent",
+      verbose=True
     )
     self.executors = [
       RetrieveKakaoDataIntentExecutor(llm),
@@ -56,7 +57,7 @@ class AutonomousAgent():
           context["current_answer"] = answer
           break
       intent_loop_count += 1
-      wrong_answers.append(answer)
+      wrong_answers.append(f"intent: {intent} / answer: {answer}")
       context["wrong_answers"] = "\n".join(wrong_answers)
       print(f"[SYSTEM]: loop ({intent_loop_count} / {self.max_loop_count})")
     log_qna(history_file, user_message, answer)
@@ -67,7 +68,6 @@ class AutonomousAgent():
     context["input"] = context["user_message"]
     context["current_answer"] = ""
     context["wrong_answers"] = ""
-    context["intent_list"] = read_file("./infrastructure/model/templates/intent_list.txt")
     context["chat_history"] = get_chat_history(conversation_id)
     return context
   
