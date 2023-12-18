@@ -13,7 +13,6 @@ class RetrieveKakaoDataIntentExecutor(IntentExecutor):
         template=read_file("./infrastructure/model/templates/retrieve_template.txt"),
       ),
       output_key="output",
-      verbose=True,
     )
 
   def support(self, intent):

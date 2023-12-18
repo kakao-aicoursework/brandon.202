@@ -12,7 +12,6 @@ class FailbackIntentExecutor(IntentExecutor):
         template=read_file("./infrastructure/model/templates/failback_response_template.txt"),
       ),
       output_key="output",
-      verbose=True,
     )
 
   def support(self, intent):

@@ -10,6 +10,10 @@
 {chat_history}
 </이전까지의 대화 기록>
 
+<취소 처리 된 대답>
+{wrong_answers}
+</취소 처리 된 대답>
+
 <확인 가능한 데이터>
 {retrieve_result}
 </확인 가능한 데이터>
